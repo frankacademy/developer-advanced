@@ -1,0 +1,8 @@
+<Configuration>
+    <Include ref="Configuration_config1.xml"/>
+    <!--
+        <Include ref="Configuration_{myconfig1}.xml"/>
+        <Include ref="Configuration_{myconfig2}.xml"/>
+
+        -->
+</Configuration>
