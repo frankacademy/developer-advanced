@@ -4,9 +4,12 @@
             <ApiListener uriPattern="/depricationexample" />
         </Receiver>
         <Pipeline>
-            <FixedResultPipe name="HelloWorld" returnString="Hello World">
-                <forward name="success" path="Exit"/>
-            </FixedResultPipe>
+            <Exits>
+                <Exit state="SUCCESS" name="Exit"/>
+            </Exits>
+            <EchoPipe name="HelloWorld" getInputFromFixedValue="Hello World">
+                <Forward name="success" path="Exit"/>
+            </EchoPipe>
         
         
         </Pipeline>
