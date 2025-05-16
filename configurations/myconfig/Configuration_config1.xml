@@ -1,0 +1,12 @@
+<Module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../FrankConfig.xsd">
+    <Adapter name="myfirstadapter">
+        <Receiver>
+            <ApiListener uriPattern="/myfirstadapter" />
+        </Receiver>
+        <Pipeline firstPipe="echo">
+            <EchoPipe name="echo" getInputFromFixedValue="Hello world!"></EchoPipe>
+        
+        
+        </Pipeline>
+    </Adapter>
+</Module>
