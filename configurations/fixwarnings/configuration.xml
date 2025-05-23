@@ -1,0 +1,29 @@
+<Configuration name="fixwarnings"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="../FrankConfig.xsd">
+
+	<Adapter name="exampleadapter">
+		<Receiver name="examplereceiver">
+			<JavaListener name="examplelistener" serviceName="example1"/>
+		</Receiver>
+		<Pipeline firstPipe="thefirstpipe">
+		<Exits>		<Exit name="EXIT" state="SUCCESS" /></Exits>
+		
+			<FixedResultPipe name="thefirstpipe" returnString="Hello Frank!">
+				<Forward name="success" path="EXIT"/>
+			</FixedResultPipe>
+	
+		</Pipeline>
+	</Adapter>
+	<Scheduler>
+		<Job name="Kies een naam"
+			active="true"
+			function="SendMessage"
+			message="haskjdhfklashdfjkasdjklahs"
+			javaListener="examplelistener"
+			cronExpression="0 0 12 ? * * *"
+			description="de beschrijving"
+		>
+		</Job>
+	</Scheduler>
+</Configuration>
