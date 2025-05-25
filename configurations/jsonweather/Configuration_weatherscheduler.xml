@@ -1,0 +1,8 @@
+<Module	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="../FrankConfig.xsd">
+
+
+	<Scheduler>
+		<SendMessageJob javaListener="Update temperature json" name="Update temperature" interval="30000"/>
+	</Scheduler>
+</Module>

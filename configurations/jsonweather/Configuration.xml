@@ -1,0 +1,5 @@
+<Configuration>
+    <Include ref="Configuration_temperature.xml"/>
+    <Include ref="Configuration_weatherscheduler.xml"/>
+
+</Configuration>

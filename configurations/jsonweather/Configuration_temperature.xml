@@ -1,46 +1,38 @@
 <Module	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:noNamespaceSchemaLocation="../FrankConfig.xsd">
 
-	<Adapter name="Update temperature">
+	<Adapter name="Update temperature JSON">
 		<Receiver name="Update temperature">
-			<JavaListener name="Update temperature" serviceName="UpdateTemperature"/>
+			<JavaListener name="Update temperature json" serviceName="UpdateTemperature"/>
 		</Receiver>
 		<Receiver name="ApiListenerReceiver" >
-			<ApiListener name="ApiListener" uriPattern="temp" allowedParameters="city"/>
+			<ApiListener name="ApiListener" uriPattern="tempjson" allowedParameters="city"/>
 		</Receiver>
 		<Pipeline>
 			<Exits>
 				<Exit name="READY" state="SUCCESS"  />
 				<Exit name="InternalServerError" state="ERROR" code="500" />
 			</Exits>
-			<SenderPipe name="Get temperature from OpenWeather"	>
+			<SenderPipe name="Get temperature from OpenWeather" storeResultInSessionKey="temperature">
 				<HttpSender url="http://api.openweathermap.org/data/2.5/weather">
-					<Param name="q" value="Amsterdam"/>
+					<Param name="q" sessionKey="city" defaultValue="Amsterdam" />
 					<Param name="units" value="metric"/>
-					<Param name="mode" value="xml"/>
+					<Param name="mode" value="json"/>
 					<Param name="appid" value="fd4e871b866ec2f446a2a6911e87168d"/>
 				</HttpSender>
 			</SenderPipe>
-			<XmlSwitchPipe
-				name="Temperature present?"
-				xpathExpression="string-length(/current/temperature/@value) > 0"
-				>
-				<Forward name="true" path="Map response" />
-				<Forward name="false" path="Return error message" />
-			</XmlSwitchPipe>
+			<IfPipe name="Temperature present?" jsonPathExpression="$.main[?(@.temp)].temp"
+				defaultMediaType="JSON">
+				<Forward name="then" path="Map response" />
+				<Forward name="else" path="Return error message" />
+			</IfPipe>
 			<EchoPipe name="Return error message"
 				getInputFromFixedValue="Temperature not found in response of api.openweathermap.org"				
                 >
 				<Forward name="success" path="InternalServerError" />
 			</EchoPipe>
 
-
-			<XsltPipe name="Map response"
-				styleSheetName="xsl/mapresponse.xsl"
-			/>
-			<JsonPipe name="XmlToJson"
-    			direction="XML2JSON">
-			</JsonPipe>
+			<DataSonnetPipe name="Map response" styleSheetName="json/transform.jsonnet" getInputFromSessionKey="temperature" />
 		
 			<SenderPipe name="Post temperature to ThingsBoard" >
 				<HttpSender

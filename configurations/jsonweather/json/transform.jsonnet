@@ -1,0 +1,3 @@
+{
+    temperature: payload.main.temp
+}
