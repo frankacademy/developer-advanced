@@ -2,12 +2,14 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="../FrankConfig.xsd">
 
-	<Adapter name="exampleadapter">
+	<Adapter name="fixwarninsadapter" active="false">
 		<Receiver name="examplereceiver">
 			<JavaListener name="examplelistener" serviceName="example1"/>
 		</Receiver>
 		<Pipeline firstPipe="thefirstpipe">
-		<Exits>		<Exit name="EXIT" state="SUCCESS" /></Exits>
+
+		<Exits><Exit name="EXIT" state="SUCCESS" /></Exits>
+			<Samba1Pipe name="samba"/>
 		
 			<FixedResultPipe name="thefirstpipe" returnString="Hello Frank!">
 				<Forward name="success" path="EXIT"/>
@@ -16,7 +18,7 @@ xsi:noNamespaceSchemaLocation="../FrankConfig.xsd">
 		</Pipeline>
 	</Adapter>
 	<Scheduler>
-		<Job name="Kies een naam"
+		<Job name="Pick a name"
 			active="true"
 			function="SendMessage"
 			message="haskjdhfklashdfjkasdjklahs"
