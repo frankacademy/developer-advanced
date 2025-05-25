@@ -1,0 +1,60 @@
+<Module	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="../FrankConfig.xsd">
+
+	<Adapter name="Update temperature">
+		<Receiver name="Update temperature">
+			<JavaListener name="Update temperature" serviceName="UpdateTemperature"/>
+		</Receiver>
+		<Receiver name="ApiListenerReceiver" >
+			<ApiListener name="ApiListener" uriPattern="temp" allowedParameters="city"/>
+		</Receiver>
+		<Pipeline>
+			<Exits>
+				<Exit name="READY" state="SUCCESS"  />
+				<Exit name="InternalServerError" state="ERROR" code="500" />
+			</Exits>
+			<SenderPipe name="Get temperature from OpenWeather"	>
+				<HttpSender url="http://api.openweathermap.org/data/2.5/weather">
+					<Param name="q" value="Amsterdam"/>
+					<Param name="units" value="metric"/>
+					<Param name="mode" value="xml"/>
+					<Param name="appid" value="fd4e871b866ec2f446a2a6911e87168d"/>
+				</HttpSender>
+			</SenderPipe>
+			<XmlSwitchPipe
+				name="Temperature present?"
+				xpathExpression="string-length(/current/temperature/@value) > 0"
+				>
+				<Forward name="true" path="Map response" />
+				<Forward name="false" path="Return error message" />
+			</XmlSwitchPipe>
+			<EchoPipe name="Return error message"
+				getInputFromFixedValue="Temperature not found in response of api.openweathermap.org"				
+                >
+				<Forward name="success" path="InternalServerError" />
+			</EchoPipe>
+
+
+			<XsltPipe name="Map response"
+				styleSheetName="xsl/mapresponse.xsl"
+			/>
+			<JsonPipe name="XmlToJson"
+    			direction="XML2JSON">
+			</JsonPipe>
+		
+			<SenderPipe name="Post temperature to ThingsBoard" >
+				<HttpSender
+					url="http://demo.thingsboard.io/api/v1/cTJg9UIDrN6HVFx1pCJK/telemetry"
+					methodType="POST"
+					contentType="application/json"
+				/>
+			</SenderPipe>
+			<EchoPipe
+				name="Return success message"
+				getInputFromFixedValue="ThingsBoard updated"
+			/>
+			
+		</Pipeline>
+	</Adapter>
+
+</Module>
