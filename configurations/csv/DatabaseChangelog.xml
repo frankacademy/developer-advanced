@@ -1,0 +1,20 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="Test" author="Jeroen JVR">
+        <comment>Add People Table</comment>
+        <createTable tableName="PEOPLE">
+            <column name="NUMBER" type="java.sql.Types.VARCHAR(100)"/>
+            <column name="IDENTIFIER" type="java.sql.Types.VARCHAR(100)"/>
+            <column name="ACCESSCODE" type="java.sql.Types.VARCHAR(100)"/>
+            <column name="RECOVERYCODE" type="java.sql.Types.VARCHAR(100)"/>
+            <column name="FIRSTNAME" type="java.sql.Types.VARCHAR(100)"/>
+            <column name="LASTNAME" type="java.sql.Types.VARCHAR(100)"/>
+            <column name="DEPARTMENT" type="java.sql.Types.VARCHAR(100)"/>
+            <column name="LOCATION" type="java.sql.Types.VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
