@@ -4,6 +4,8 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
+
+
     <changeSet id="Test" author="Jeroen JVR">
         <comment>Add People Table</comment>
         <createTable tableName="PEOPLE">
@@ -15,6 +17,22 @@
             <column name="LASTNAME" type="java.sql.Types.VARCHAR(100)"/>
             <column name="DEPARTMENT" type="java.sql.Types.VARCHAR(100)"/>
             <column name="LOCATION" type="java.sql.Types.VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+      <changeSet id="KNMI-1" author="Jaco de Groot">
+        <comment>Add table DAGGEGEVENS</comment>
+        <createTable tableName="DAGGEGEVENS">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_DAGGEGEVENS"/>
+            </column>
+            <column name="STN" type="INTEGER"/>
+            <column name="YYYYMMDD" type="INTEGER"/>
+            <column name="VVN" type="INTEGER"/>
+            <column name="VVX" type="INTEGER"/>
+            <column name="NG" type="INTEGER"/>
+            <column name="DR" type="INTEGER"/>
+            <column name="RH" type="INTEGER"/>
+            <column name="EV24" type="INTEGER"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

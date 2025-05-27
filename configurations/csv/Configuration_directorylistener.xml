@@ -20,13 +20,13 @@
 			<CsvParserPipe name="parse CSV" fieldSeparator=";" prettyPrint="true"/>
 			<ForEachChildElementPipe name="xmlIterator" elementXPathExpression="csv/record">
                 <FixedQuerySender query="INSERT INTO PEOPLE (IDENTIFIER, ACCESSCODE , RECOVERYCODE , FIRSTNAME , LASTNAME , DEPARTMENT , LOCATION) VALUES(?{IDENTIFIER}, ?{ACCESSCODE} , ?{RECOVERYCODE} , ?{FIRSTNAME} , ?{LASTNAME} , ?{DEPARTMENT} , ?{LOCATION})">
-                    <Param name="IDENTIFIER"         xpathExpression="record/Identifier"/>
+                    <Param name="IDENTIFIER"   xpathExpression="record/Identifier"/>
                     <Param name="ACCESSCODE"   xpathExpression="record/AccessCode"/>
-                    <Param name="RECOVERYCODE"    xpathExpression="record/RecoveryCode"/>
-                    <Param name="FIRSTNAME"     xpathExpression="record/FirstName"/>
-                    <Param name="LASTNAME"       xpathExpression="record/LastName"/>
-                    <Param name="DEPARTMENT"          xpathExpression="record/Department"/>
-                    <Param name="LOCATION"       xpathExpression="record/location"/>
+                    <Param name="RECOVERYCODE" xpathExpression="record/RecoveryCode"/>
+                    <Param name="FIRSTNAME"    xpathExpression="record/FirstName"/>
+                    <Param name="LASTNAME"     xpathExpression="record/LastName"/>
+                    <Param name="DEPARTMENT"   xpathExpression="record/Department"/>
+                    <Param name="LOCATION"     xpathExpression="record/location"/>
                 </FixedQuerySender>
             </ForEachChildElementPipe>
 

@@ -1,0 +1,36 @@
+clipboard training day 2
+
+day 1 questions
+========
+hidding passwords and other secitive information
+log.hideRegex voor logs
+ 
+
+hideRegex as an attribute on a pipe/receiver
+properties.hide to hide properties in configurations
+ 
+a param has an attribute hidden that can be set to true to hide the contents
+(voor properties die met credential:beginnen)
+==========
+
+
+
+
+SQL
+
+Select* from databasechangelog
+Select * from people
+Select * from DAGGEGEVENS
+
+
+properties
+
+
+jdbc.migrator.active=true
+
+
+
+
+
+
+ 

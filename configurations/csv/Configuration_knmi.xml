@@ -1,0 +1,79 @@
+<Module
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../FrankConfig.xsd"
+    xmlns:flow="urn:frank-flow"
+    flow:gridSize="50"
+    >
+    <Adapter name="Update knmi daggegevens">
+        <Receiver>
+            <JavaListener name="Update table daggegevens"/>
+        </Receiver>
+        <Pipeline>
+            <SenderPipe name="Remove old data from table daggegevens">
+                <FixedQuerySender
+                    query="DELETE FROM DAGGEGEVENS"
+                />
+            </SenderPipe>
+            <SenderPipe name="Read daggegevens">
+                <HttpSender
+                url="https://www.daggegevens.knmi.nl/klimatologie/daggegevens"
+                methodType="POST"
+                postType="FORMDATA"
+                >
+                <Param name="start" value="20231001"/>
+                <Param name="end" value="20231015"/>
+                <!-- Following two like stns=235:280:260&vars=VICL:PRCP on https://www.knmi.nl/kennis-en-datacentrum/achtergrond/data-ophalen-vanuit-een-script -->
+                <Param name="stns" value="235:280:260"/>
+                <Param name="vars" value="VICL:PRCP"/>
+                </HttpSender>
+            </SenderPipe>
+            <CsvParserPipe
+                name="Transform to XML"
+                fieldNames="STN,YYYYMMDD,VVN,VVX,NG,DR,RH,EV24"
+                prettyPrint="true"
+            />
+<ForEachChildElementPipe
+    name="Insert into table daggegevens"
+    elementXPathExpression="/csv/record"
+    >
+        <FrankSender name="Call store record"
+            scope="ADAPTER"
+            target="Update knmi daggegevens - Store record"
+        />
+            </ForEachChildElementPipe>
+            <SenderPipe name="Read from table daggegevens">
+                <FixedQuerySender
+                    query="SELECT * FROM DAGGEGEVENS"
+                    queryType="SELECT"
+                    prettyPrint="true"
+                />
+            </SenderPipe>
+        </Pipeline>
+    </Adapter>
+
+    <Adapter name="Update knmi daggegevens - Store record" description="Store one csv record into table daggegevens"
+        >
+        <Receiver><FrankListener /></Receiver>
+        <Pipeline>
+            <XmlSwitchPipe
+                name="Is comment"
+                xpathExpression="count(/record/YYYYMMDD)=0 or /record/YYYYMMDD='YYYYMMDD'"
+                >
+                <Forward name="true" path="READY" />
+                <Forward name="false" path="Store in database" />
+            </XmlSwitchPipe>
+            <SenderPipe name="Store in database">
+                <FixedQuerySender query="INSERT INTO DAGGEGEVENS (STN, YYYYMMDD, VVN, VVX, NG, DR, RH, EV24) VALUES (?, ?, ?, ?, ?, ?, ?, ?)">
+                    <Param name="STN" xpathExpression="/record/STN" />
+                    <Param name="YYYYMMDD" xpathExpression="/record/YYYYMMDD" />
+                    <Param name="VVN" xpathExpression="/record/VVN" />
+                    <Param name="VVX" xpathExpression="/record/VVX" />
+                    <Param name="NG" xpathExpression="/record/NG" />
+                    <Param name="DR" xpathExpression="/record/DR" />
+                    <Param name="RH" xpathExpression="/record/RH" />
+                    <Param name="EV24" xpathExpression="/record/EV24" />
+                </FixedQuerySender>
+            </SenderPipe>
+        </Pipeline>
+    </Adapter>
+</Module>

@@ -1,3 +1,4 @@
 <Configuration>
     <Include ref="Configuration_directorylistener.xml"/>
+    <Include ref="Configuration_knmi.xml"/>
 </Configuration>
