@@ -20,4 +20,7 @@
 # DAY 2 
 - file handling
 - csv processing 
-- database
+- database 
+  - FixedQuerySender
+  - DirectQuerySender
+
