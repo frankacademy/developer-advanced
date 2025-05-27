@@ -18,7 +18,11 @@
 				<Exit name="SUCCESS" state="SUCCESS" />			
 			</Exits>
 			<CsvParserPipe name="parse CSV" fieldSeparator=";" prettyPrint="true"/>
+			<ForEachChildElementPipe name="process row"
 			
+			>
+		
+		</ForEachChildElementPipe>
 
 		</Pipeline>
 	</Adapter>
