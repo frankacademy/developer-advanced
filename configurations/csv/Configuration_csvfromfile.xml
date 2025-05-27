@@ -1,0 +1,16 @@
+<Module	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="../FrankConfig.xsd" active="false">
+
+	<Adapter name="Read CSV From Filesystem">
+	<Receiver>
+		<DirectoryListener />
+	</Receiver>	
+	<Pipeline>
+		<Exits>		
+			<Exit name="SUCCESS" state="SUCCESS" />			
+		</Exits>
+		<EchoPipe name="dummy"></EchoPipe>
+	</Pipeline>
+	</Adapter>
+
+</Module>
