@@ -1,0 +1,17 @@
+services:
+  developer-advanced:
+    image: frankframework/frankframework:9.1.0
+    ports:
+      - 8080:8080
+    volumes:
+#      - ./frank-flow.war:/usr/local/tomcat/webapps/frank-flow.war:ro
+      - ./configurations:/opt/frank/configurations
+    environment:
+      instance.name: developer-advanced
+      dtap.stage: LOC
+      dtap.side: local
+      configurations.directory.autoLoad: true
+      configurations.names: ""
+      jdbc.require: false
+      # For Frank!Flow to run as webapp
+      CATALINA_OPTS: -Dfrank-flow.context-path= 
