@@ -1,5 +1,5 @@
 <Configuration>
-    <Include ref="Configuration_csvfromfile.xml"/>
+    <Include ref="Configuration_directorylistener.xml"/>
 
 
 </Configuration>

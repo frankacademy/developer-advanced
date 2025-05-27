@@ -1,9 +1,9 @@
 <Module	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:noNamespaceSchemaLocation="../FrankConfig.xsd" active="false">
+		xsi:noNamespaceSchemaLocation="../FrankConfig.xsd" >
 
 	<Adapter name="Read CSV From Filesystem">
 	<Receiver>
-		<DirectoryListener />
+		<DirectoryListener inputFolder="c:\temp\input" />
 	</Receiver>	
 	<Pipeline>
 		<Exits>		
