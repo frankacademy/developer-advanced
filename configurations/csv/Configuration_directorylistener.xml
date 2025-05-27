@@ -1,16 +1,26 @@
 <Module	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:noNamespaceSchemaLocation="../FrankConfig.xsd" >
 
-	<Adapter name="Read CSV From Filesystem">
-	<Receiver>
-		<DirectoryListener inputFolder="c:\temp\input" />
-	</Receiver>	
-	<Pipeline>
-		<Exits>		
-			<Exit name="SUCCESS" state="SUCCESS" />			
-		</Exits>
-		<EchoPipe name="dummy"></EchoPipe>
-	</Pipeline>
+    <Adapter name="processfile">
+        <Receiver name="processfile">
+            <DirectoryListener 
+                inputFolder="c:\temp\input" 
+                inProcessFolder="c:\temp\inprocess" 
+                processedFolder="c:\temp\processed" 
+                createFolders="true"
+				messageType="CONTENTS"
+				fileTimeSensitive="true"
+               />
+        </Receiver>
+
+		<Pipeline>
+			<Exits>		
+				<Exit name="SUCCESS" state="SUCCESS" />			
+			</Exits>
+			<CsvParserPipe name="parse CSV" fieldSeparator=";" prettyPrint="true"/>
+			
+
+		</Pipeline>
 	</Adapter>
 
 </Module>

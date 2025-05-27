@@ -3,6 +3,8 @@
 
 
 	<Scheduler>
-		<SendMessageJob javaListener="Update temperature" name="Update temperature" interval="60000"/>
+		<SendMessageJob javaListener="Update temperature" name="Update temperature" interval="60000" active="false"/>
+		<SendMessageJob javaListener="Update temperature json" name="Update temperature" interval="30000" active="false"/>
 	</Scheduler>
+
 </Module>
