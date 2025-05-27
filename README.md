@@ -10,3 +10,14 @@
   dtap.stage=LOC (LOC does means you do not need to setup authorisation)
   ff.version=9.1.0 (allows you to select the Frank Framework version)
 
+# DAY 1
+- api listener 
+- http sender
+- xml validator
+- datasonnet and JsonPath
+
+
+# DAY 2 
+- file handling
+- csv processing 
+- database
